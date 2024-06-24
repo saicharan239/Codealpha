@@ -1,0 +1,84 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Travel {
+    String name;
+    String date;
+    double budget;
+
+    Travel(String name, String date, double budget) {
+        this.name = name;
+        this.date = date;
+        this.budget = budget;
+    }
+}
+
+public class TravelItineraryPlanner {
+
+    static ArrayList<Travel> destinations = new ArrayList<>();
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to the Travel Itinerary Planner!");
+
+        while (true) {
+            System.out.println("1. Add Destination");
+            System.out.println("2. View Itinerary");
+            System.out.println("3. Calculate Total Budget");
+            System.out.println("4. Exit");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();  // consume newline
+
+            switch (choice) {
+                case 1:
+                    addDestination(scanner);
+                    break;
+                case 2:
+                    viewItinerary();
+                    break;
+                case 3:
+                    calculateTotalBudget();
+                    break;
+                case 4:
+                    System.out.println("Exiting the Travel Itinerary Planner. Goodbye!");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    private static void addDestination(Scanner scanner) {
+        System.out.print("Enter destination name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter travel date (YYYY-MM-DD): ");
+        String date = scanner.nextLine();
+        System.out.print("Enter budget for this destination: ");
+        double budget = scanner.nextDouble();
+        scanner.nextLine();  // consume newline
+
+        destinations.add(new Travel(name, date, budget));
+        System.out.println("Destination added successfully!");
+    }
+
+    private static void viewItinerary() {
+        if (destinations.isEmpty()) {
+            System.out.println("No destinations added yet.");
+        } else {
+            System.out.println("Your Itinerary:");
+            for (Travel dest : destinations) {
+                System.out.println("Destination: " + dest.name + ", Date: " + dest.date + ", Budget: $" + dest.budget);
+            }
+        }
+    }
+
+    private static void calculateTotalBudget() {
+        double totalBudget = 0;
+        for (Travel dest : destinations) {
+            totalBudget += dest.budget;
+        }
+        System.out.println("Total Budget for your trip: $" + totalBudget);
+    }
+}
